@@ -5,6 +5,11 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    wait_for_update: 500
+  });
   gtag('js', new Date());
   gtag('config', 'G-YD1BCEQZ1Z');
 </script>
@@ -343,6 +348,51 @@ footer{
   .footer-inner{flex-direction:column;gap:32px;}
   .footer-bottom{flex-direction:column;text-align:center;}
 }
+
+/* ── COOKIE BANNER ── */
+#cookie-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:999;
+  background:var(--card-bg);border-top:1px solid var(--border);
+  box-shadow:0 -4px 24px rgba(0,0,0,0.12);padding:18px 32px;
+}
+.cookie-inner{
+  max-width:960px;margin:0 auto;
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+}
+.cookie-inner p{flex:1;font-size:13px;color:var(--text2);min-width:220px;line-height:1.6;}
+.cookie-inner p a{color:var(--blue);text-decoration:underline;cursor:pointer;}
+.cookie-actions{display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap;}
+.cookie-btn{
+  padding:9px 22px;border-radius:8px;font-size:13px;font-weight:600;
+  cursor:pointer;border:none;transition:opacity 0.2s;
+}
+.cookie-btn-accept{background:var(--blue);color:#fff;}
+.cookie-btn-accept:hover{opacity:0.85;}
+.cookie-btn-reject{background:var(--bg2);color:var(--text2);border:1px solid var(--border);}
+.cookie-btn-reject:hover{background:var(--bg3);}
+
+/* ── KVKK MODAL ── */
+#kvkk-overlay{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;padding:20px;
+}
+#kvkk-overlay.open{display:flex;}
+#kvkk-modal{
+  background:var(--card-bg);border-radius:16px;max-width:640px;width:100%;
+  max-height:82vh;overflow-y:auto;padding:36px 40px;position:relative;
+  border:1px solid var(--border);box-shadow:0 8px 48px rgba(0,0,0,0.24);
+}
+.kvkk-close{
+  position:absolute;top:16px;right:20px;font-size:22px;
+  background:none;border:none;cursor:pointer;color:var(--text3);line-height:1;
+}
+.kvkk-close:hover{color:var(--text);}
+#kvkk-modal h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:18px;}
+#kvkk-modal h3{font-size:14px;font-weight:700;color:var(--blue);margin:20px 0 6px;}
+#kvkk-modal p,#kvkk-modal li{font-size:13px;color:var(--text2);line-height:1.75;}
+#kvkk-modal ul{padding-left:18px;margin-top:4px;}
+#kvkk-modal li{margin-bottom:4px;}
 </style>
 </head>
 <body>
@@ -667,6 +717,113 @@ form.addEventListener('submit', function(event) {
     statusBox.style.display = 'block';
   });
 });
+</script>
+
+<!-- ── COOKIE CONSENT BANNER ── -->
+<div id="cookie-banner" style="display:none">
+  <div class="cookie-inner">
+    <p data-en='This site uses Google Analytics cookies to improve user experience. For details, see our <a onclick="openKvkk()" href="#">Privacy & KVKK Policy</a>.'
+       data-tr='Bu site kullanıcı deneyimini geliştirmek amacıyla Google Analytics çerezleri kullanmaktadır. Ayrıntılar için <a onclick="openKvkk()" href="#">Gizlilik &amp; KVKK Politikamıza</a> bakınız.'>
+      Bu site kullanıcı deneyimini geliştirmek amacıyla Google Analytics çerezleri kullanmaktadır. Ayrıntılar için <a onclick="openKvkk()" href="#">Gizlilik &amp; KVKK Politikamıza</a> bakınız.
+    </p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-btn-reject" onclick="rejectCookies()" data-en="Reject" data-tr="Reddet">Reddet</button>
+      <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()" data-en="Accept" data-tr="Kabul Et">Kabul Et</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── KVKK / GİZLİLİK POLİTİKASI MODAL ── -->
+<div id="kvkk-overlay">
+  <div id="kvkk-modal" role="dialog" aria-modal="true" aria-labelledby="kvkk-title">
+    <button class="kvkk-close" onclick="closeKvkk()" aria-label="Kapat">×</button>
+    <h2 id="kvkk-title">Gizlilik &amp; KVKK Politikası</h2>
+
+    <h3>1. Veri Sorumlusu</h3>
+    <p>ISU Blockchain &amp; Finance Club (İstinye Üniversitesi) olarak 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında veri sorumlusu sıfatıyla hareket etmekteyiz. İletişim: <strong>isublockchain@gmail.com</strong></p>
+
+    <h3>2. Toplanan Veriler ve Amaç</h3>
+    <p>Web sitemizde yalnızca analitik amaçla Google Analytics 4 (GA4) kullanılmaktadır. GA4 aşağıdaki verileri anonim/takma adlı olarak toplar:</p>
+    <ul>
+      <li>Ziyaret edilen sayfalar ve oturum süresi</li>
+      <li>Tarayıcı türü, işletim sistemi, ekran çözünürlüğü</li>
+      <li>Yaklaşık konum (şehir/ülke düzeyinde, IP adresi anonimleştirilir)</li>
+      <li>Referans kaynağı (nereden gelindiği)</li>
+    </ul>
+    <p>Bu veriler; ziyaretçi davranışını anlamak ve içerik kalitesini artırmak amacıyla işlenmektedir.</p>
+
+    <h3>3. Hukuki Dayanak</h3>
+    <p>Kişisel verileriniz, KVKK m. 5/1 uyarınca <strong>açık rızanıza</strong> dayanılarak işlenmektedir. Çerez onayını reddetmeniz hâlinde analitik veriler toplanmaz.</p>
+
+    <h3>4. Veri Saklama ve Aktarım</h3>
+    <p>GA4 verileri Google LLC altyapısında tutulmaktadır. Google LLC, AB Standart Sözleşme Maddeleri kapsamında GDPR ve yürürlükteki uluslararası veri aktarım kurallarına uymaktadır. Veriler GA4 varsayılan süresi olan <strong>14 ay</strong> boyunca saklanır.</p>
+
+    <h3>5. Haklarınız (KVKK m. 11)</h3>
+    <ul>
+      <li>Verilerinizin işlenip işlenmediğini öğrenme</li>
+      <li>İşlenmişse bilgi talep etme</li>
+      <li>Verilerin silinmesini veya anonim hâle getirilmesini isteme</li>
+      <li>İşlemeye itiraz etme</li>
+    </ul>
+    <p>Talepleriniz için <strong>isublockchain@gmail.com</strong> adresine yazabilirsiniz.</p>
+
+    <h3>6. Çerez Tercihlerinizi Değiştirme</h3>
+    <p>Sayfanın altındaki çerez bildirimini kapatmış olsanız bile tarayıcınızın çerez ayarlarından veya aşağıdaki düğmeden tercihlerinizi güncelleyebilirsiniz.</p>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies();closeKvkk()">Çerezleri Kabul Et</button>
+      <button class="cookie-btn cookie-btn-reject" onclick="rejectCookies();closeKvkk()">Çerezleri Reddet</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── KVKK / ÇEREZ YÖNETİMİ ──
+const CONSENT_KEY = 'isu_cookie_consent';
+
+function grantAnalytics() {
+  gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied' });
+}
+
+function acceptCookies() {
+  localStorage.setItem(CONSENT_KEY, 'granted');
+  grantAnalytics();
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+function rejectCookies() {
+  localStorage.setItem(CONSENT_KEY, 'denied');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+function openKvkk(e) {
+  if (e) e.preventDefault();
+  document.getElementById('kvkk-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKvkk() {
+  document.getElementById('kvkk-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('kvkk-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeKvkk();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeKvkk();
+});
+
+(function initConsent() {
+  const saved = localStorage.getItem(CONSENT_KEY);
+  if (saved === 'granted') {
+    grantAnalytics();
+  } else if (saved === 'denied') {
+    // banner gösterilmez, izleme yok
+  } else {
+    document.getElementById('cookie-banner').style.display = 'block';
+  }
+})();
 </script>
 </body>
 </html>
