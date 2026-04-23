@@ -461,18 +461,18 @@ footer{
       <div class="team-leader-card">
         <div class="team-avatar">👤</div>
         <h3 data-en="Vice President" data-tr="Başkan Yardımcısı">Vice President</h3>
-        <span class="role" data-en="Vice President" data-tr="Başkan Yardımcısı">Vice President</span>
+        <span class="role" data-en="Vice President" data-tr="Eylül Şener">Eylül Şener</span>
       </div>
     </div>
 
     <!-- Board Members -->
     <div class="team-grid">
-      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Board of Directors" data-tr="Yönetim Kurulu">Board of Directors</small></div>
-      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Board of Directors" data-tr="Yönetim Kurulu">Board of Directors</small></div>
-      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Board of Directors" data-tr="Yönetim Kurulu">Board of Directors</small></div>
-      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Board of Directors" data-tr="Yönetim Kurulu">Board of Directors</small></div>
-      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Board of Directors" data-tr="Yönetim Kurulu">Board of Directors</small></div>
-      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Board of Directors" data-tr="Yönetim Kurulu">Board of Directors</small></div>
+      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Emre Kırşan" data-tr="Emre Kırşan">Board of Directors</small></div>
+      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Seha Yaren Alkan" data-tr="Seha Yaren Alkan">Board of Directors</small></div>
+      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Şimal Eryılmaz" data-tr="Şimal Eryılmaz">Board of Directors</small></div>
+      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="İbrahim Mete" data-tr="İbrahim Mete">Board of Directors</small></div>
+      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Ronya Çelik" data-tr="Ronya Çelik">Board of Directors</small></div>
+      <div class="team-member"><div class="team-member-avatar">👤</div><h4 data-en="Board Member" data-tr="Yönetim Kurulu Üyesi">Board Member</h4><small data-en="Berkle Yavuz" data-tr="Berkle Yavuz">Board of Directors</small></div>
     </div>
     <p class="team-coming" data-en="Names & photos coming soon." data-tr="İsimler ve fotoğraflar yakında eklenecek.">Names & photos coming soon.</p>
   </div>
@@ -522,7 +522,7 @@ footer{
       <div class="contact-box">
         <h3 data-en="Send us a Message" data-tr="Mesaj Gönder">Send us a Message</h3>
         <p data-en="Have a question, collaboration idea, or just want to say hi? Fill out the form and we'll get back to you." data-tr="Sorun, iş birliği fikrin veya sadece merhaba demek istiyorsan formu doldur, sana geri döneceğiz.">Have a question, collaboration idea, or just want to say hi? Fill out the form and we'll get back to you.</p>
-        <form class="contact-form" action="https://formspree.io/f/mvzdvwwn" method="POST">
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/mvzdvwwn" method="POST">
           <div class="form-row">
             <div class="form-field">
               <label data-en="Name" data-tr="İsim">Name</label>
@@ -638,6 +638,36 @@ function toggleLang(){
   });
   document.documentElement.lang = currentLang;
 }
+// İletişim Formu AJAX Entegrasyonu
+const form = document.getElementById('contact-form');
+const statusBox = document.getElementById('form-success'); 
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault(); // Sayfanın yönlendirilmesini durdurur
+
+  const data = new FormData(form);
+
+  fetch(form.action, {
+    method: form.method,
+    body: data,
+    headers: {
+        'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      statusBox.style.display = 'block'; // Onay mesajını gösterir
+      form.reset(); // Form alanlarını temizler
+    } else {
+      statusBox.style.display = 'block';
+      statusBox.style.color = '#ef4444'; 
+      statusBox.innerHTML = "❌ Bir hata oluştu, lütfen tekrar deneyin.";
+    }
+  }).catch(error => {
+    statusBox.style.display = 'block';
+    statusBox.style.color = '#ef4444';
+    statusBox.innerHTML = "❌ Bir bağlantı hatası oluştu.";
+  });
+});
 </script>
 </body>
 </html>
