@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YD1BCEQZ1Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YD1BCEQZ1Z');
+</script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ISU Blockchain & Finance Club</title>
@@ -581,20 +588,6 @@ footer{
 </footer>
 
 <script>
-// ── FORM ──
-function handleSubmit(e){
-  e.preventDefault();
-  const form = e.target;
-  const name = form.querySelector('input[type="text"]').value;
-  const email = form.querySelector('input[type="email"]').value;
-  const subject = form.querySelectorAll('input[type="text"]')[1]?.value || '';
-  const message = form.querySelector('textarea').value;
-  const mailto = `mailto:isublockchain@gmail.com?subject=${encodeURIComponent(subject || 'Website Contact')}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
-  window.location.href = mailto;
-  document.getElementById('form-success').style.display = 'block';
-  form.reset();
-}
-
 // ── INSTAGRAM EMBED ──
 window.addEventListener('load', function() {
   if (window.instgrm) {
@@ -642,8 +635,12 @@ function toggleLang(){
 const form = document.getElementById('contact-form');
 const statusBox = document.getElementById('form-success'); 
 
+const SUCCESS_HTML = statusBox.innerHTML;
+
 form.addEventListener('submit', function(event) {
-  event.preventDefault(); // Sayfanın yönlendirilmesini durdurur
+  event.preventDefault();
+
+  statusBox.style.display = 'none';
 
   const data = new FormData(form);
 
@@ -655,17 +652,19 @@ form.addEventListener('submit', function(event) {
     }
   }).then(response => {
     if (response.ok) {
-      statusBox.style.display = 'block'; // Onay mesajını gösterir
-      form.reset(); // Form alanlarını temizler
-    } else {
+      statusBox.style.color = '';
+      statusBox.innerHTML = SUCCESS_HTML;
       statusBox.style.display = 'block';
-      statusBox.style.color = '#ef4444'; 
+      form.reset();
+    } else {
+      statusBox.style.color = '#ef4444';
       statusBox.innerHTML = "❌ Bir hata oluştu, lütfen tekrar deneyin.";
+      statusBox.style.display = 'block';
     }
   }).catch(error => {
-    statusBox.style.display = 'block';
     statusBox.style.color = '#ef4444';
     statusBox.innerHTML = "❌ Bir bağlantı hatası oluştu.";
+    statusBox.style.display = 'block';
   });
 });
 </script>
